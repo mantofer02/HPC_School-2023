@@ -10,8 +10,7 @@ int main(int argc, char * argv[]) {
   printf("Hello, I am %d of %d processes \n", my_rank, n_procs);
 
   float data[1e5];
-  memset(data, my_rank, sizeof(data))
-
+  memset(data, my_rank, sizeof(data));
 
    if (my_rank == 0) {
     MPI_Send(&data, 1, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
