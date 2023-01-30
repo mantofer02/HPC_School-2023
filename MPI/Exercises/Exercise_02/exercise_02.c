@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <mpi.h>
+#include <string.h>
 
 int main(int argc, char * argv[]) {
   int error, n_procs, my_rank;
@@ -9,7 +10,7 @@ int main(int argc, char * argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   printf("Hello, I am %d of %d processes \n", my_rank, n_procs);
 
-  float data[1e5];
+  float data[10000];
   memset(data, my_rank, sizeof(data));
 
    if (my_rank == 0) {
