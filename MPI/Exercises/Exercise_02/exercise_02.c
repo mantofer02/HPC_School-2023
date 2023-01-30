@@ -10,10 +10,10 @@ int main(int argc, char * argv[]) {
   printf("Hello, I am %d of %d processes \n", my_rank, n_procs);
 
 
-   if (rank == 0) {
+   if (my_rank == 0) {
     MPI_Send(&data, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
     printf("Process 0 sent data: %d\n", data);
-  } else if (rank == 1) {
+  } else if (my_rank == 1) {
     MPI_Recv(&data, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     printf("Process 1 received data: %d\n", data);
   }
