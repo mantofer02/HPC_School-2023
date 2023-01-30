@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <mpi.h>
 
-// test
 int main(int argc, char* argv[]){
 
   int me, nprocs;
