@@ -13,12 +13,12 @@ int main(int argc, char *argv[])
   MPI_Comm_size(MPI_COMM_WORLD, &n_procs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
-  // for (int i = 0; i < SIZE; i++)
-  // {
-  //   buffer[i] = my_rank;
-  // };
+  for (int i = 0; i < SIZE; i++)
+  {
+    buffer[i] = 9;
+  };
   // preguntar porque memset pone todo en 0
-  memset(buffer, 5, sizeof(buffer));
+  // memset(buffer, 5, sizeof(buffer));
 
   if (my_rank == 0)
   {
