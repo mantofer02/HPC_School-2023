@@ -4,14 +4,15 @@
 
 int main(int argc, char * argv[]) {
   int error, n_procs, my_rank;
-  error = MPI_Init(&argc, &argv);
+  float buffer[10000];
+  float data[10000];
+  memset(buffer, my_rank, sizeof(buffer));
 
+  error = MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &n_procs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
-  float buffer[10000];
-  float data[10000]
-  memset(buffer, my_rank, sizeof(buffer));
+
 
    if (my_rank == 0) {
     MPI_Send(&buffer, 1, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
