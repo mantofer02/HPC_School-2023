@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <mpi.h>
 #include <string.h>
+#define SIZE 10000
 
 int main(int argc, char *argv[])
 {
   int error, n_procs, my_rank;
-  float buffer[10000];
-  float data[10000];
+  float buffer[SIZE];
+  float data[SIZE];
 
   error = MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &n_procs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
-  for (int i = 0; i < 10000; i++)
+  for (int i = 0; i < SIZE; i++)
   {
     buffer[i] = my_rank;
   };
@@ -21,15 +22,15 @@ int main(int argc, char *argv[])
 
   if (my_rank == 0)
   {
-    MPI_Send(buffer, 1, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
-    MPI_Recv(data, 1, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Send(buffer, SIZE, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
+    MPI_Recv(data, SIZE, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
   }
   else if (my_rank == 1)
   {
-    MPI_Recv(data, 1, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    MPI_Send(buffer, 1, MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
+    MPI_Recv(data, SIZE, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Send(buffer, SIZE, MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
   }
-  printf("Process %d received data: %f\n", my_rank, buffer[4]);
+  printf("Process %d received data: %f\n", my_rank, buff[4]);
 
   error = MPI_Finalize();
 }
