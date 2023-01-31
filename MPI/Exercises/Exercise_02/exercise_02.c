@@ -10,7 +10,7 @@ int main(int argc, char * argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   printf("Hello, I am %d of %d processes \n", my_rank, n_procs);
 
-  float data[1e5];
+  float data[int(1e5)];
   memset(data, my_rank, sizeof(data));
 
    if (my_rank == 0) {
@@ -20,7 +20,7 @@ int main(int argc, char * argv[]) {
     MPI_Send(&data, 1, MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     MPI_Recv(&data, 1, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
   }
-    printf("Process %d received data: %f\n", my_rank, data);
+    printf("Process %d received data: %f\n", my_rank, data[5]);
 
   error = MPI_Finalize();
 }
