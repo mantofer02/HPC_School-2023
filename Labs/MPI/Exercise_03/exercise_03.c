@@ -16,14 +16,14 @@ int main(int argc, char *argv[])
   // memset(a, my_rank, sizeof(a));
   for (int i = 0; i < SIZE; i++)
   {
-    a[i] = my_rank
+    a[i] = my_rank;
   }
-  printf("%f A \n", a[4]);
 
   MPI_Request request;
 
   MPI_Isend(a, SIZE, MPI_FLOAT, (my_rank + 1) % n_procs, 0, MPI_COMM_WORLD, &request);
   MPI_Irecv(b, SIZE, MPI_FLOAT, (my_rank + n_procs - 1) % n_procs, 0, MPI_COMM_WORLD, &request);
+  MPI_Wait(&request, MPI_STATUS_IGNORE);
 
   printf("I am rocess %d and I received value: %f\n", my_rank, b[5]);
 
