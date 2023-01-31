@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
   int error, n_procs, my_rank;
-  float b, sum;
+  float a, b, sum;
 
   error = MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &n_procs);
@@ -14,10 +14,11 @@ int main(int argc, char *argv[])
   MPI_Request request;
 
   int it = my_rank;
+  a = (float)my_rank;
   for (i = 0; i < n_procs; i++)
   {
-    MPI_Isend(my_rank, SIZE, MPI_FLOAT, (it + n_procs - 1) % n_procs, 0, MPI_COMM_WORLD, &request);
-    MPI_Irecv(b, SIZE, MPI_FLOAT, (it + 1) % n_procs, 0, MPI_COMM_WORLD, &request);
+    MPI_Isend(&a, SIZE, MPI_FLOAT, (it + n_procs - 1) % n_procs, 0, MPI_COMM_WORLD, &request);
+    MPI_Irecv(&b, SIZE, MPI_FLOAT, (it + 1) % n_procs, 0, MPI_COMM_WORLD, &request);
     sum += b;
     MPI_Wait(&request, MPI_STATUS_IGNORE);
   }
