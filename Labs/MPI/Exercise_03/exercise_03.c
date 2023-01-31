@@ -6,31 +6,19 @@
 int main(int argc, char *argv[])
 {
   int error, n_procs, my_rank;
-  float buffer[SIZE];
-  float data[SIZE];
+  float a[SIZE];
+  float b[SIZE];
 
   error = MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &n_procs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
-  for (int i = 0; i < SIZE; i++)
-  {
-    buffer[i] = my_rank;
-  };
-  // preguntar porque memset pone todo en 0
-  // memset(buffer, 5, sizeof(buffer));
+  memset(a, my_rank, sizeof(buffer));
 
-  if (my_rank == 0)
-  {
-    MPI_Send(buffer, SIZE, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
-    MPI_Recv(data, SIZE, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-  }
-  else if (my_rank == 1)
-  {
-    MPI_Recv(data, SIZE, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    MPI_Send(buffer, SIZE, MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
-  }
-  printf("Process %d received data: %f\n", my_rank, data[4]);
+  MPI_Isend(a, SIZE, MPI_FLOAT, (my_rank + 1) % n_procs, 0, MPI_COMM_WORLD);
+  MPI_Irecv(b, SIZE, MPI_FLOAT, (my_rank - 1 >= 0 ? my_rank : n_procs - 1, 0, MPI_COMM_WORLD));
+
+  printf("I am rocess %d  and I received value: %f\n", my_rank, b[5]);
 
   error = MPI_Finalize();
 };
