@@ -13,8 +13,7 @@ int main(int argc, char *argv[])
   MPI_Comm_size(MPI_COMM_WORLD, &n_procs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
-  float val = float(my_rank);
-  memset(a, val, sizeof(a));
+  memset(a, (float)my_rank, sizeof(a));
   printf("Test %f \n", a[4]);
   // for (int i = 0; i < SIZE; i++)
   // {
