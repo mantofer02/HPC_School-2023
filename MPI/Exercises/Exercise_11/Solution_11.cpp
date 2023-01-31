@@ -11,7 +11,6 @@ int main(int argc, char **argv) {
  MPI_Datatype myvector;
  int myvector_size;
  const int n=5, nb=2;
- MPI_Aint myvector_extent, myvector_lb;
  float a[n][n];
  MPI_Status mystatus;
 
@@ -31,14 +30,9 @@ int main(int argc, char **argv) {
  if(n_rank == 0) for(i=0;i<n;i++) for(j=0;j<n;j++) a[i][j] = 0.F;
  if(n_rank == 1) for(i=0;i<n;i++) for(j=0;j<n;j++) a[i][j] = 1.F;
 
-// Define vector, extract and print size and extent
+// Define vector
  MPI_Type_vector(n, nb, n, MPI_FLOAT, &myvector);
  MPI_Type_commit(&myvector);
-
- MPI_Type_size(myvector, &myvector_size);
- MPI_Type_get_extent(myvector, &myvector_lb, &myvector_extent);
-
- cout << "MPI myvector size, lb, extent: " << myvector_size << ", " << myvector_lb << ", " << myvector_extent << endl;
 
 // Print matrix a for rank=1
  if(n_rank == 1) {

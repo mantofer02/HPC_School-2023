@@ -4,8 +4,6 @@ Write a program working only with 2 MPI processes.
 
 For each process, define a square matrix A (nXn). Rank 0 fills the matrix with 0, while rank 1 fills it with 1. Define a datatype that handles a column of A.
 
-(Optional) Extract size and extent of this type: is the result what you expect?
-
 Now begin the communication: rank 0 sends the first column of A to rank 1, overwriting its own first column. Check the results by printing the matrix on the screen. <br> Modify the code by sending the first nb columns of A: do you have to change the type? Can you send two items of the new type?
 
 ![alt text](../images/es11.png)

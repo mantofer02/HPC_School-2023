@@ -7,10 +7,12 @@ int main(int argc, char **argv) {
 
 // Declare variables (or do it later)
  int n_proc, n_rank, i,j ;
- MPI_Datatype myvector;
- int myvector_size;
+  int myvector_size;
  const int n=5, nb=2;
  float a[n][n];
+
+ /* We need to declare an MPI handle for the new datatype. What type will it be? */
+ ... myvector;
  MPI_Status mystatus;
 
 // Start MPI
@@ -18,7 +20,7 @@ int main(int argc, char **argv) {
  MPI_Comm_size(MPI_COMM_WORLD,&n_proc);
  MPI_Comm_rank(MPI_COMM_WORLD,&n_rank);
 
-// Check the number of processes is 2
+// Check if the number of processes is 2
  if(n_proc != 2) {
     if(n_rank == 0) printf("Test program has to work only with two MPI processes\n");
    MPI_Finalize();
@@ -29,11 +31,11 @@ int main(int argc, char **argv) {
  if(n_rank == 0) for(i=0;i<n;i++) for(j=0;j<n;j++) a[i][j] = 0.F;
  if(n_rank == 1) for(i=0;i<n;i++) for(j=0;j<n;j++) a[i][j] = 1.F;
 
-// Define vector
- MPI_Type_vector(n, nb, n, MPI_FLOAT, &myvector);
- MPI_Type_commit(&myvector);
-
-// Print matrix a for rank=1
+// Define vector and commit the new datatype in "myvector"
+ ...
+ ...
+ 
+ // Print matrix a for rank=1
  if(n_rank == 1) {
     printf("Matrix A before communications:\n");
     for(i=0;i<n;i++) {
@@ -44,12 +46,12 @@ int main(int argc, char **argv) {
     }
  }
 
-// Communicate
+// Communicate. Remember that we are sending one istance of the now datatype "myvector"
  if(n_rank == 0) {
-    MPI_Send(a, 1, myvector, 1, 100, MPI_COMM_WORLD);
+    MPI_Send(...);
  }
  if(n_rank == 1) {
-    MPI_Recv(a, 1, myvector, 0, 100, MPI_COMM_WORLD, &mystatus);
+    MPI_Recv(...);
  }
 
 // Print matrix a for rank=1
@@ -63,7 +65,8 @@ int main(int argc, char **argv) {
     }
  }
 
- MPI_Type_free(&myvector);
+// Free the allocated vector datatype. How?
+ ...
 
 // Finalize MPI
  MPI_Finalize();

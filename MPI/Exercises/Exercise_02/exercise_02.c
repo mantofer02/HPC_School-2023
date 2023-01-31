@@ -15,10 +15,10 @@ int main(int argc, char * argv[]) {
 
    if (my_rank == 0) {
     MPI_Send(&data, 1, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
-    printf("Process 0 sent data: %d\n", data[1]);
+    printf("Process 0 sent data: %f\n", data[1]);
   } else if (my_rank == 1) {
     MPI_Recv(&data, 1, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    printf("Process 1 received data: %d\n", data);
+    printf("Process 1 received data: %f\n", data);
   }
 
   error = MPI_Finalize();
