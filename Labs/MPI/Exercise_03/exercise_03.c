@@ -33,4 +33,4 @@ int main(int argc, char *argv[])
   printf("Process %d received data: %f\n", my_rank, data[4]);
 
   error = MPI_Finalize();
-}
+};
