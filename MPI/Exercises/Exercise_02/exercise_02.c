@@ -12,7 +12,7 @@ int main(int argc, char * argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &n_procs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
-  printf("pre message %f", buffer[4])
+  printf("pre message %f", buffer[4]);
 
 
    if (my_rank == 0) {
