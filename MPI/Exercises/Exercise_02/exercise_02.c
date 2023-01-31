@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
   {
     buffer[i] = my_rank;
   };
-  memset(buffer, 5, sizeof(buffer));
+
   printf("pre message %f", buffer[4]);
 
   if (my_rank == 0)
