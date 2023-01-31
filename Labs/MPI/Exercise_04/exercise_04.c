@@ -1,29 +1,39 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <mpi.h>
-#include <string.h>
-#define SIZE 10000
+
+/* #define ndata 1000 */
+#define ndata 1000000
 
 int main(int argc, char *argv[])
 {
-  int error, n_procs, my_rank;
+
+  int my_rank, n_procs, left, right;
   float a, b, sum;
 
-  error = MPI_Init(&argc, &argv);
+  MPI_Status status;
+  MPI_Request request;
+  MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &n_procs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
-  MPI_Request request;
 
-  int it = my_rank;
   a = (float)my_rank;
-  // for (int i = 0; i < n_procs; i++)
-  // {
-  MPI_Isend(&a, SIZE, MPI_FLOAT, (it + n_procs - 1) % n_procs, 0, MPI_COMM_WORLD, &request);
-  MPI_Irecv(&a, SIZE, MPI_FLOAT, (it + 1) % n_procs, 0, MPI_COMM_WORLD, &request);
-  // sum += b;
-  MPI_Wait(&request, MPI_STATUS_IGNORE);
-  // }
+  right = (my_rank + 1) % n_procs;
+  left = (my_rank - 1 + n_procs) % n_procs;
 
-  printf("I am process %d and sum = %f\n", my_rank, sum);
+  for (int i = 0; i < n_procs; i++)
+  {
+    MPI_Isend(&a, 1, MPI_FLOAT, right, 0, MPI_COMM_WORLD, &request);
+    MPI_Recv(&b, 1, MPI_FLOAT, left, 0, MPI_COMM_WORLD, &status);
+    a = b;
+    sum += b;
+    MPI_Wait(&request, &status);
+  }
 
-  error = MPI_Finalize();
-};
+  /* Sendrecv data */
+
+  printf("\tI am task %d and my sum is: %1.2f \n", my_rank, sum);
+
+  MPI_Finalize();
+  return 0;
+}
