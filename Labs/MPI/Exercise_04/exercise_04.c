@@ -15,7 +15,8 @@ int main(int argc, char *argv[])
 
   int it = my_rank;
   a = (float)my_rank;
-  for (i = 0; i < n_procs; i++)
+  printf("Hi /n");
+  for (int i = 0; i < n_procs; i++)
   {
     MPI_Isend(&a, SIZE, MPI_FLOAT, (it + n_procs - 1) % n_procs, 0, MPI_COMM_WORLD, &request);
     MPI_Irecv(&b, SIZE, MPI_FLOAT, (it + 1) % n_procs, 0, MPI_COMM_WORLD, &request);
