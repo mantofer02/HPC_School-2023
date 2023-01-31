@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
   for (int i = 0; i < SIZE; i++)
   {
-    buffer[i] = 9;
+    buffer[i] = my_rank;
   };
   // preguntar porque memset pone todo en 0
   // memset(buffer, 5, sizeof(buffer));
