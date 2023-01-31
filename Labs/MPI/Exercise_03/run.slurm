@@ -14,4 +14,4 @@
 PROGRAM=solution
 
 
-mpirun -n 2 ./${PROGRAM}
+mpirun -n 4 ./${PROGRAM}
