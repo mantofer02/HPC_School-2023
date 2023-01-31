@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     MPI_Recv(data, SIZE, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Send(buffer, SIZE, MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
   }
-  printf("Process %d received data: %f\n", my_rank, buffer[4]);
+  printf("Process %d received data: %f\n", my_rank, data[4]);
 
   error = MPI_Finalize();
 }
