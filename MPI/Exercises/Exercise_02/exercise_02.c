@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
   };
   // preguntar porque memset pone todo en 0
   // memset(buffer, 5, sizeof(buffer));
-  printf("pre message %f", buffer[4]);
 
   if (my_rank == 0)
   {
@@ -27,8 +26,8 @@ int main(int argc, char *argv[])
   }
   else if (my_rank == 1)
   {
-    MPI_Send(&buffer, 1, MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     MPI_Recv(&data, 1, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Send(&buffer, 1, MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
   }
   printf("Process %d received data: %f\n", my_rank, data[4]);
 
