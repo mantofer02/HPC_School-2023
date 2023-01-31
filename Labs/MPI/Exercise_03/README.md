@@ -1,6 +1,6 @@
 # Exercise 3
 
-Write a code that using point to point communications performs a circular send/receive as represented in the following figure
+Write a code that using point to point communications performs a circular send/receive. as represented in the following figure
 
 ![alt text](../images/es3.png)
 
@@ -19,29 +19,28 @@ Avoid deadlocks and make sure that the code will work with a general number of t
 
 ```
 
-The program terminates with each process printing out one element of the array B. 
+The program terminates with each process printing out one element of the array B.
 
 ```
- I am task 0 and I have received b(0) = 3.00 
+ I am task 0 and I have received b(0) = 3.00
 
- I am task 1 and I have received b(0) = 0.00 
+ I am task 1 and I have received b(0) = 0.00
 
- I am task 2 and I have received b(0) = 1.00 
+ I am task 2 and I have received b(0) = 1.00
 
  I am task 3 and I have received b(0) = 2.00
 ```
 
 ## HINTS:
 
-|    | **C** |
-|----|-------|
-| [MPI_ISEND](https://www.open-mpi.org/doc/v3.1/man3/MPI_Isend.3.php) | int MPI_Isend(void\* buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPI_Request \*request) |
-| [MPI_RECV](https://www.open-mpi.org/doc/v3.1/man3/MPI_Recv.3.php) | int MPI_Recv(void\* buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Status \*status) |
-| [MPI_INIT](https://www.open-mpi.org/doc/v3.1/man3/MPI_Init.3.php) | int MPI_Init(int \*argc, char \***argv) |
-| [MPI_COMM_SIZE](https://www.open-mpi.org/doc/v3.1/man3/MPI_Comm_size.3.php) | int MPI_Comm_size(MPI_Comm comm, int \*size) |
-| [MPI_COMM_RANK](https://www.open-mpi.org/doc/v3.1/man3/MPI_Comm_rank.3.php) | int MPI_Comm_rank(MPI_Comm comm, int \*rank) |
-| [MPI_FINALIZE](https://www.open-mpi.org/doc/v3.1/man3/MPI_Finalize.3.php) | int MPI_Finalize(void) |
-
+|                                                                             | **C**                                                                                                                |
+| --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| [MPI_ISEND](https://www.open-mpi.org/doc/v3.1/man3/MPI_Isend.3.php)         | int MPI_Isend(void\* buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPI_Request \*request) |
+| [MPI_RECV](https://www.open-mpi.org/doc/v3.1/man3/MPI_Recv.3.php)           | int MPI_Recv(void\* buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Status \*status)  |
+| [MPI_INIT](https://www.open-mpi.org/doc/v3.1/man3/MPI_Init.3.php)           | int MPI_Init(int \*argc, char \*\*\*argv)                                                                            |
+| [MPI_COMM_SIZE](https://www.open-mpi.org/doc/v3.1/man3/MPI_Comm_size.3.php) | int MPI_Comm_size(MPI_Comm comm, int \*size)                                                                         |
+| [MPI_COMM_RANK](https://www.open-mpi.org/doc/v3.1/man3/MPI_Comm_rank.3.php) | int MPI_Comm_rank(MPI_Comm comm, int \*rank)                                                                         |
+| [MPI_FINALIZE](https://www.open-mpi.org/doc/v3.1/man3/MPI_Finalize.3.php)   | int MPI_Finalize(void)                                                                                               |
 
 # Q&A Exercise 3
 
@@ -51,10 +50,10 @@ A- The processes are independent and their termination order is basically not gu
 
 **Q- What function call can you use instead of the pair ISEND/IRECV?**
 
-A- A send-receive operation is very useful for executing a shift operation across a chain of processes: 
+A- A send-receive operation is very useful for executing a shift operation across a chain of processes:
 
-|    | **C** |
-|----|-------|
-| [MPI_SENDRECV](https://www.open-mpi.org/doc/v3.1/man3/MPI_Sendrecv.3.php) | int MPI_Sendrecv(void *sendbuf, int sendcount, MPI_Datatype sendtype, int dest, int sendtag, void *recvbuf, int recvcount, MPI_Datatype recvtype, int source, int recvtag, MPI_Comm comm, MPI_Status *status) |
+|                                                                           | **C**                                                                                                                                                                                                          |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [MPI_SENDRECV](https://www.open-mpi.org/doc/v3.1/man3/MPI_Sendrecv.3.php) | int MPI_Sendrecv(void *sendbuf, int sendcount, MPI_Datatype sendtype, int dest, int sendtag, void *recvbuf, int recvcount, MPI_Datatype recvtype, int source, int recvtag, MPI_Comm comm, MPI_Status \*status) |
 
 Try to modify the code in order to call the SENDRECV function instead of the SEND and RECV calls.
