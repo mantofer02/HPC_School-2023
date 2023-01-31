@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
   {
     a[i] = my_rank
   }
+  printf("%f A \n", a[4]);
 
   MPI_Request request;
 
