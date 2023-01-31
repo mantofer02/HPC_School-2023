@@ -15,12 +15,11 @@ int main(int argc, char *argv[])
 
   int it = my_rank;
   a = (float)my_rank;
-  printf("Hi /n");
   for (int i = 0; i < n_procs; i++)
   {
     MPI_Isend(&a, SIZE, MPI_FLOAT, (it + n_procs - 1) % n_procs, 0, MPI_COMM_WORLD, &request);
-    MPI_Irecv(&b, SIZE, MPI_FLOAT, (it + 1) % n_procs, 0, MPI_COMM_WORLD, &request);
-    sum += b;
+    MPI_Irecv(&a, SIZE, MPI_FLOAT, (it + 1) % n_procs, 0, MPI_COMM_WORLD, &request);
+    // sum += b;
     MPI_Wait(&request, MPI_STATUS_IGNORE);
   }
 
