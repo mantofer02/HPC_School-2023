@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
   memset(a, my_rank, sizeof(a));
+  printf("Test %f", a[4]);
   // for (int i = 0; i < SIZE; i++)
   // {
   //   a[i] = my_rank;
