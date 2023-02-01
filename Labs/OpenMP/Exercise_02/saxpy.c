@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
   start_time = omp_get_wtime();
 
-#pragma omp parallel for schedule(auto)
+#pragma omp parallel for schedule(dynamic)
   for (i = 0; i < ARRAY_SIZE; i++)
   {
     y[i] = scalar * x[i] + y[i];
