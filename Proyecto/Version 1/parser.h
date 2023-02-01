@@ -1,18 +1,12 @@
-#ifndef MODEL
-#define MODEL
+#ifndef PARSER
+#define PARSER
 
 
-class Model {
+class Parser {
   private:
     int n;
   public:
-    Model();
-    void createModel();
-    void addDecorator();
-    void calculateTransitions();
-    int* getSequences();
-    char* generateWord();
-    float getProbability();
+    void loadWords();
 };
 
 #endif
