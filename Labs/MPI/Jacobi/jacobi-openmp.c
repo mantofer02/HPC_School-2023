@@ -109,28 +109,38 @@ void initialise(double **grid, double **grid_new, int local_nx)
 {
 	int i, j;
 
-	for (j = 0; j <= local_nx + 1; j++)
+#pragma omp parallel
 	{
-		grid_new[j][0] = grid[j][0] = LEFT;
-	}
-	for (j = 0; j <= local_nx + 1; j++)
-	{
-		grid_new[j][ny2 - 1] = grid[j][ny2 - 1] = RIGHT;
-	}
-
-	for (j = 0; j <= ny + 1; j++)
-	{
-		grid_new[0][j] = grid[0][j] = TOP;
-	}
-	for (j = 0; j <= ny + 1; j++)
-	{
-		grid_new[local_nx + 1][j] = grid[local_nx + 1][j] = BOTTOM;
-	}
-	for (i = 1; i <= local_nx; i++)
-	{
-		for (j = 1; j < ny + 1; j++)
+#pragma omp task
+		for (j = 0; j <= local_nx + 1; j++)
 		{
-			grid_new[i][j] = grid[i][j] = 0;
+			grid_new[j][0] = grid[j][0] = LEFT;
+		}
+
+#pragma omp task
+		for (j = 0; j <= local_nx + 1; j++)
+		{
+			grid_new[j][ny2 - 1] = grid[j][ny2 - 1] = RIGHT;
+		}
+
+#pragma omp task
+		for (j = 0; j <= ny + 1; j++)
+		{
+			grid_new[0][j] = grid[0][j] = TOP;
+		}
+
+#pragma omp task
+		for (j = 0; j <= ny + 1; j++)
+		{
+			grid_new[local_nx + 1][j] = grid[local_nx + 1][j] = BOTTOM;
+		}
+
+		for (i = 1; i <= local_nx; i++)
+		{
+			for (j = 1; j < ny + 1; j++)
+			{
+				grid_new[i][j] = grid[i][j] = 0;
+			}
 		}
 	}
 }
